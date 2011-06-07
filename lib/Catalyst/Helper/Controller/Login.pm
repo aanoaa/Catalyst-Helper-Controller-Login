@@ -50,43 +50,42 @@ __DATA__
 
 __compclass__
 package [% class %];
-# ABSTRACT: [% class %]
+# ABSTRACT: Catalyst Controller
 use Moose;
 use namespace::autoclean;
 
-BEGIN { extends 'Catalyst::Controller'; }
+BEGIN {extends 'Catalyst::Controller'; }
 
-=head1 NAME
+=head1 DESCRIPTION
 
-[% class %] - Catalyst controller.
+Catalyst Controller for Authetification and Session Store.
 
 =head1 METHODS
 
 =head2 index
 
-[% class %] index
+Supply input form as HTML
+if supplied POST request with params,
+using it as authenticate.
+
+redirect to root index if authenticate successfully.
 
 =cut
 
 sub index :Path :Args(0) {
     my ($self, $c) = @_;
-    # do stuff here
+    if ( $c->req->method eq 'POST' && $c->form->has_error ) {
+        $c->detach;
+    }
+
+    my $username = $c->req->params->{username};
+    my $password = $c->req->params->{password};
+
+    if ($c->authenticate({ user_id => $username, user_pw => $password })) {
+        $c->response->redirect($c->uri_for('/'));
+        return;
+    }
 }
-
-=head1 SEE ALSO
-
-L<[% app %]>
-
-=head1 AUTHOR
-
-[% author %]
-
-=head1 LICENSE
-
-This is free software; you can redistribute it and/or modify it under
-the same terms as the Perl 5 programming language system itself.
-
-=cut
 
 __PACKAGE__->meta->make_immutable;
 
