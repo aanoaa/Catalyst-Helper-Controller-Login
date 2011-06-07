@@ -64,7 +64,8 @@ Catalyst Controller for Authetification and Session Store.
 
 =head2 index
 
-Supply input form as HTML
+Supply input form as HTML.
+
 if supplied POST request with params,
 using it as authenticate.
 
