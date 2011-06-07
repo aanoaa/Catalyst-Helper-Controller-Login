@@ -5,7 +5,7 @@ use strict;
 
 =head1 SYNOPSIS
 
-    script/create.pl controller NAME Catalyst::Helper::Controller::Login
+    script/*_create.pl controller Login Login
 
 =head1 DESCRIPTION
 
@@ -33,7 +33,7 @@ Makes test for Controller.
 
 sub mk_comptest {
     my ( $self, $helper ) = @_;
-    my $test = $helper->{'test'};
+    my $test = $helper->{test};
     $helper->render_file( 'comptest', $test );
 }
 
